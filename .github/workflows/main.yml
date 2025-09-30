@@ -25,8 +25,8 @@ jobs:
 
       - name: Run news crawler
         env:
-          Database_URL: ${{ secrets.Database_URL }}
-          Database_ANON_KEY: ${{ secrets.Database_ANON_KEY }}
+          VITE_Bolt Database_URL: ${{ secrets.Database_URL }}
+          VITE_Bolt Database_ANON_KEY: ${{ secrets.Database_ANON_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
