@@ -1,0 +1,38 @@
+name: Auto Update Medical News
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run crawler and update
+        env:
+          VITE_Bolt Database_URL: ${{ secrets.VITE_Bolt Database_URL }}
+          VITE_Bolt Database_ANON_KEY: ${{ secrets.VITE_Bolt Database_ANON_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          node crawl-multi-ai.cjs
+          node export-to-public.cjs
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add public/news-data.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update: Latest medical news" && git push)
