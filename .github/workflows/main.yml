@@ -23,8 +23,8 @@ jobs:
 
       - name: Run crawler and update
         env:
-          VITE_Bolt Database_URL: ${{ secrets.Bolt Database_URL }}
-          VITE_Bolt Database_ANON_KEY: ${{ secrets.Bolt Database_ANON_KEY }}
+          VITE_Bolt Database_URL: ${{ secrets.Database_URL }}
+          VITE_Bolt Database_ANON_KEY: ${{ secrets.Database_ANON_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           node crawl-multi-ai.cjs
